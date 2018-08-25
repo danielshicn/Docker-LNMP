@@ -38,6 +38,22 @@ services:
       docker_net:
         ipv4_address: ${PHP72_IP}
 
+  php71:
+    build: ./php/php71/
+    expose:
+      - "9000"
+    volumes:
+      - ${WORKSPACES}:/var/www/html/:rw,cached
+      - ./conf/php/php71.ini:/usr/local/etc/php/php.ini:ro,cached
+      - ./conf/php/php-fpm.d/www71.conf:/usr/local/etc/php-fpm.d/www.conf:rw,cached
+      - ./log/php-fpm/:/var/log/php-fpm/:rw,cached
+    links:
+      - mysql:mysql
+      - redis:redis
+    networks:
+      docker_net:
+        ipv4_address: ${PHP71_IP}
+
   php56:
     build: ./php/php56/
     expose:
